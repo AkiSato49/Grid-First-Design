@@ -38,18 +38,21 @@
 		<!-- Rows 3–10: one per role -->
 		{#each COLOR_ROLES as { key, label }, i}
 			{@const row = i + 3}
-			<p class="role-label" style="grid-column:{state.cp.c1}/{state.cp.c1+1}; grid-row:{row};">{label}</p>
+			<!-- label at ÷4 size -->
+			<p class="role-label" style="grid-column:{state.cp.c1}/{state.cp.c1+1}; grid-row:{row}; font-size:{state.td4}rem;">{label}</p>
 
+			<!-- light: picker + hex + color block right next to it -->
 			<div class="swatch-cell" style="grid-column:{state.cp.c1+1}/{cMid}; grid-row:{row};">
 				<input type="color" bind:value={lightMap[key]} class="swatch" />
 				<input type="text"  bind:value={lightMap[key]} class="hex" maxlength="7" spellcheck="false" />
-				<div class="chip" style="background:{lightMap[key]};"></div>
+				<div class="color-block" style="background:{lightMap[key]};"></div>
 			</div>
 
+			<!-- dark: picker + hex + color block right next to it -->
 			<div class="swatch-cell" style="grid-column:{cMid}/-1; grid-row:{row};">
 				<input type="color" bind:value={darkMap[key]} class="swatch" />
 				<input type="text"  bind:value={darkMap[key]} class="hex" maxlength="7" spellcheck="false" />
-				<div class="chip" style="background:{darkMap[key]};"></div>
+				<div class="color-block" style="background:{darkMap[key]};"></div>
 			</div>
 		{/each}
 
@@ -89,7 +92,7 @@
 
 	.role-label { font-size: 0.6rem; color: rgba(255,255,255,0.35); align-self: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-	.swatch-cell { display: flex; align-items: center; gap: 0.4rem; pointer-events: auto; align-self: center; }
+	.swatch-cell { display: flex; align-items: center; gap: 0.4rem; pointer-events: auto; align-self: stretch; width: 100%; }
 	.swatch { width: 22px; height: 22px; border: none; border-radius: 4px; padding: 0; background: none; cursor: pointer; flex-shrink: 0; }
 	.hex {
 		width: 72px; background: rgba(255,255,255,0.06);
@@ -97,7 +100,12 @@
 		color: rgba(255,255,255,0.7); font-size: 0.62rem; font-family: monospace; padding: 0.15rem 0.3rem;
 	}
 	.hex:focus { outline: 1px solid #6366f1; }
-	.chip { width: 14px; height: 14px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.1); flex-shrink: 0; }
+	.color-block {
+		flex: 1;
+		align-self: stretch;  /* full row height */
+		border-radius: 3px;
+		border: 1px solid rgba(255,255,255,0.07);
+	}
 	.div-row { border-top: 1px solid rgba(255,255,255,0.06); align-self: center; }
 	.preview-strip { display: flex; align-items: center; gap: 0.4rem; padding: 0 0.75rem; border-radius: 4px; overflow: hidden; }
 	.preview-chip { width: 2rem; height: 2rem; border-radius: 4px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 2px; flex-shrink: 0; }
