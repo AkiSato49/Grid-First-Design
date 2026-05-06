@@ -4,27 +4,36 @@
 	font-family: 'Satoshi';
 	src: url('/fonts/satoshi/Satoshi-Variable.woff2') format('woff2'),
 	     url('/fonts/satoshi/Satoshi-Variable.woff')  format('woff');
-	font-weight: 300 900;
-	font-style: normal;
-	font-display: swap;
+	font-weight: 300 900; font-style: normal; font-display: swap;
 }
-
 @font-face {
 	font-family: 'Satoshi';
 	src: url('/fonts/satoshi/Satoshi-VariableItalic.woff2') format('woff2'),
 	     url('/fonts/satoshi/Satoshi-VariableItalic.woff')  format('woff');
-	font-weight: 300 900;
-	font-style: italic;
-	font-display: swap;
+	font-weight: 300 900; font-style: italic; font-display: swap;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { height: 100%; }
 body { font-family: 'Satoshi', system-ui, sans-serif; -webkit-font-smoothing: antialiased; background: #0c0c0c; color: #ededed; }
 
-/* Any element inside a grid layer: never stretch tracks, always spill visibly */
-.grid-layer * {
-	min-width:  0;
-	min-height: 0;
-	overflow:   visible;
+/* ── Grid layers: prevent content from stretching tracks ── */
+.grid-layer * { min-width: 0; min-height: 0; overflow: visible; }
+
+/* ── Shared grid layer base ── */
+.grid-layer {
+	position: fixed; inset: 0; display: grid; pointer-events: none;
 }
+.grid-layer.interactive { pointer-events: auto; }
+.measure    { visibility: hidden; }
+.cell       { border: 1px solid rgba(99,102,241,0.2); }
+.col-guide  { background: rgba(99,102,241,0.07); border-left: 1px solid rgba(99,102,241,0.3); border-right: 1px solid rgba(99,102,241,0.3); }
+.row-guide  { background: rgba(239,68,68,0.05); border-top: 1px solid rgba(239,68,68,0.25); border-bottom: 1px solid rgba(239,68,68,0.25); }
+
+/* ── Scrollable canvas (type / colors / export / guide tabs) ── */
+.scroll-canvas { position: fixed; inset: 0; overflow-y: scroll; overflow-x: hidden; }
+.scroll-grid   { display: grid; }
+
+/* ── Text display modes ── */
+.demo { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none; }
+.comp { white-space: normal;  overflow: visible; pointer-events: none; }
